@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="63" id="KGk-i7-Jjw" customClass="SongTableViewCell" customModule="Itunes_API" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="47.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XKd-Nh-Oay">
+                        <rect key="frame" x="16" y="4" width="40" height="40"/>
+                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="Aql-Cd-2VY"/>
+                            <constraint firstAttribute="width" constant="40" id="VW6-Oc-nuG"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Девочка с каре" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCC-Ry-VXd">
+                        <rect key="frame" x="64" y="6" width="295" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="МУККА — Девочка с каре" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVy-U7-un2">
+                        <rect key="frame" x="64" y="26" width="295" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="XKd-Nh-Oay" secondAttribute="bottom" constant="4" id="2bP-or-3VP"/>
+                    <constraint firstItem="XKd-Nh-Oay" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FLa-UB-SUl"/>
+                    <constraint firstItem="fCC-Ry-VXd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="S9N-9P-6Mm"/>
+                    <constraint firstItem="sVy-U7-un2" firstAttribute="top" secondItem="fCC-Ry-VXd" secondAttribute="bottom" constant="2" id="T5I-jS-rOS"/>
+                    <constraint firstItem="XKd-Nh-Oay" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="TKC-QL-MHi"/>
+                    <constraint firstItem="fCC-Ry-VXd" firstAttribute="leading" secondItem="XKd-Nh-Oay" secondAttribute="trailing" constant="8" id="V5n-cj-JRF"/>
+                    <constraint firstItem="sVy-U7-un2" firstAttribute="leading" secondItem="XKd-Nh-Oay" secondAttribute="trailing" constant="8" id="aPM-AX-y0U"/>
+                    <constraint firstAttribute="trailing" secondItem="fCC-Ry-VXd" secondAttribute="trailing" constant="16" id="iYT-8H-dVx"/>
+                    <constraint firstAttribute="bottom" secondItem="sVy-U7-un2" secondAttribute="bottom" constant="6" id="snU-BR-Lnz"/>
+                    <constraint firstAttribute="trailing" secondItem="sVy-U7-un2" secondAttribute="trailing" constant="16" id="wYK-Zh-V6F"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="songAlbumImageView" destination="XKd-Nh-Oay" id="uwy-39-3vM"/>
+                <outlet property="songDescriptionLabel" destination="sVy-U7-un2" id="CaI-1I-Vdy"/>
+                <outlet property="songNameLabel" destination="fCC-Ry-VXd" id="GDK-f4-fnp"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="126.22767857142857"/>
+        </tableViewCell>
+    </objects>
+</document>
