@@ -33,14 +33,16 @@ class ITunesApi {
         let parameters = [URLQueryItem(name: "media", value: "music"), URLQueryItem(name: "entity", value: "song"), URLQueryItem(name: "term", value: name)]
         
         return getRequest(endpoint: endpointSearch, parametrs: parameters) { data, error in
-            guard error == nil, let resultData = data else { completion(nil, error); return }
-            
-            do {
-                let songsSearchResult = try JSONDecoder().decode(ItunesSongsSearchResult.self, from: resultData)
-                completion(songsSearchResult.results, nil)
-            }
-            catch {
-                completion(nil, error); return
+            DispatchQueue.main.async {
+                guard error == nil, let resultData = data else { completion(nil, error); return }
+                
+                do {
+                    let songsSearchResult = try JSONDecoder().decode(ItunesSongsSearchResult.self, from: resultData)
+                    completion(songsSearchResult.results.compactMap { $0.value }, nil)
+                }
+                catch {
+                    completion(nil, error)
+                }
             }
         }
     }
@@ -56,13 +58,16 @@ class ITunesApi {
         }
         
         let downloadTask = URLSession.shared.downloadTask(with: url) { urlData, response, error in
-            guard error == nil, let songDataUrl = urlData else { completion(nil, error); return }
-            do {
-                try FileManager.default.copyItem(at: songDataUrl, to: destinationURL)
-                completion(destinationURL, nil)
-            }
-            catch {
-                completion(nil, error)
+            DispatchQueue.main.async {
+                guard error == nil, let songDataUrl = urlData else { completion(nil, error); return }
+                
+                do {
+                    try FileManager.default.copyItem(at: songDataUrl, to: destinationURL)
+                    completion(destinationURL, nil)
+                }
+                catch {
+                    completion(nil, error)
+                }
             }
         }
         
