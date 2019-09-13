@@ -9,6 +9,6 @@
 import Foundation
 
 protocol SelectSongViewControllerDelegate: class {
+    func didFinish(_ vc: SelectSongTableViewController, needsDismissing: Bool)
     func didSelectSong(song: ITunesSong)
-    func didFinish()
 }

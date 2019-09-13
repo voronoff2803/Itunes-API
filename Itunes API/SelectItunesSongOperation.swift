@@ -12,7 +12,6 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
     
     let presenter: UIViewController
     var selectedSong: ITunesSong?
-    let selectSongVC = SelectSongTableViewController()
 
     private let semaphore = DispatchSemaphore(value: 0)
     
@@ -22,13 +21,14 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
     
     override func main() {
         DispatchQueue.main.async() {
-            self.selectSongVC.delegate = self
+            let selectSongVC = SelectSongTableViewController()
+            selectSongVC.delegate = self
             
             if let navigationController = self.presenter.navigationController {
-                navigationController.pushViewController(self.selectSongVC, animated: true)
+                navigationController.pushViewController(selectSongVC, animated: true)
             }
             else {
-                let navController = UINavigationController(rootViewController: self.selectSongVC)
+                let navController = UINavigationController(rootViewController: selectSongVC)
                 self.presenter.present(navController, animated: true)
             }
         }
@@ -37,15 +37,25 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
     
     func didSelectSong(song: ITunesSong) {
         selectedSong = song
-        semaphore.signal()
     }
     
-    func didFinish() {
-        if let navigationController = presenter.navigationController {
-            navigationController.popViewController(animated: true)
-        } else {
-            selectSongVC.dismiss(animated: true, completion: nil)
-        }
+    private var didFinish = false
+    
+    func didFinish(_ vc: SelectSongTableViewController, needsDismissing: Bool) {
+        guard didFinish == false else { return }
+        didFinish = true
+        
+        if needsDismissing { vc.navigationController.assertingNonNil?.popOrDismiss() }
         semaphore.signal()
+    }
+}
+
+// MARK: -
+
+fileprivate extension UINavigationController {
+    
+    func popOrDismiss() {
+        if viewControllers.count > 1 { popViewController(animated: true) }
+        else { presentingViewController.assertingNonNil?.dismiss(animated: true) }
     }
 }

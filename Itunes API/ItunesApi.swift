@@ -18,19 +18,22 @@ class ITunesApi {
     typealias ItunesDownloadResult = (URL?, Error?)
     
     private func getRequest(endpoint: String, parametrs: [URLQueryItem], completion: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask? {
-        guard var urlComponents = URLComponents(string: domain + endpoint) else { return nil }
-        urlComponents.queryItems = parametrs
-        guard let url = urlComponents.url else { return nil }
+        var urlComponents = URLComponents(string: domain + endpoint)
+        urlComponents?.queryItems = parametrs
+        guard let url = urlComponents?.url else { assert(false); return nil }
+        
         let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
             completion(data, nil)
         }
+        
+        dataTask.resume()
         return dataTask
     }
     
     func searchMusic(name: String, completion: @escaping (ItunesSearchResult) -> Void) -> URLSessionDataTask? {
         let parameters = [URLQueryItem(name: "media", value: "music"), URLQueryItem(name: "entity", value: "song"), URLQueryItem(name: "term", value: name)]
         
-        let dataTask = getRequest(endpoint: endpointSearch, parametrs: parameters) { data, error in
+        return getRequest(endpoint: endpointSearch, parametrs: parameters) { data, error in
             guard error == nil, let resultData = data else { completion(ItunesSearchResult(nil, error)); return }
             
             do {
@@ -41,16 +44,16 @@ class ITunesApi {
                 completion(ItunesSearchResult(nil, error)); return
             }
         }
-        dataTask?.resume()
-        return dataTask
     }
     
     func downloadSong(url: URL, id: Int, completion: @escaping (ItunesDownloadResult) -> Void) -> URLSessionDownloadTask? {
         let destinationURL = URL(fileURLWithPath: "\(NSTemporaryDirectory())\(id).m4a")
+        
         if FileManager.default.fileExists(atPath: destinationURL.path) {
             completion(ItunesDownloadResult(destinationURL, nil))
             return nil
         }
+        
         let downloadTask = URLSession.shared.downloadTask(with: url) { urlData, response, error in
             guard error == nil, let songDataUrl = urlData else { completion(ItunesDownloadResult(nil, error)); return }
             do {
@@ -61,6 +64,7 @@ class ITunesApi {
                 completion(ItunesDownloadResult(nil, error))
             }
         }
+        
         downloadTask.resume()
         return downloadTask
     }
