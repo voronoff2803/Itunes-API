@@ -54,12 +54,11 @@ class ITunesApi {
         return dataTask
     }
     
-    // COMMENT: эту функцию можно вынести в ItunesSong как init(withItunesSongDict dict: [String : Any])
+    // COMMENT: эту ответственность можно вынести в ItunesSong используя Codable протокол и одну структуру-помощник для хранения результатов, что тоже будет Codable
+    
     func songFromDict(songDict: [String: Any]) -> ITunesSong? {
-        // COMMENT: эти guard можно соединить в один
         guard let previewUrl = URL(string: songDict["previewUrl"] as? String ?? "") else { return nil }
         guard let albumImageUrl = URL(string: songDict["artworkUrl60"] as? String ?? "") else { return nil }
-        // COMMENT: бывают ли песни где одхого из этих параметров может не быть? Если нет, можно вынести все проверки и кастования из кода ниже в guard и в его else вызвать assert
         let song = ITunesSong(id: songDict["trackId"] as? Int ?? 0,
                               name: songDict["trackName"] as? String ?? "",
                               censoredName: songDict["trackCensoredName"] as? String ?? "",
