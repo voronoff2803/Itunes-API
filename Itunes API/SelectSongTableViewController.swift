@@ -44,6 +44,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         super.viewWillDisappear(animated)
         
         if self.isMovingFromParent {
+            delegate?.didFinish()
             closeAction()
         }
     }
