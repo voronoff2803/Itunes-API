@@ -32,6 +32,7 @@ class SongTableViewCell: UITableViewCell {
         DispatchQueue.global().async { [weak self] in
             guard let data = try? Data(contentsOf: url) else { return }
             DispatchQueue.main.async {
+                // COMMENT: эти guard можно соединить в один
                 guard let image = UIImage(data: data) else { return }
                 guard url == self?.currentAlbumImageURL else { return }
                 self?.songAlbumImageView.image = image

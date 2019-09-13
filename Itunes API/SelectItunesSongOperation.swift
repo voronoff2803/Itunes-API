@@ -9,13 +9,14 @@
 import UIKit
 
 class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
-    let presenterViewController: UIViewController
+    
+    let presenter: UIViewController
     var selectedSong: ITunesSong?
 
     private let semaphore = DispatchSemaphore(value: 0)
     
     init(presenter: UIViewController) {
-        presenterViewController = presenter
+        self.presenter = presenter
     }
     
     override func main() {
@@ -23,12 +24,12 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
             let selectSongVC = SelectSongTableViewController()
             selectSongVC.delegate = self
             
-            if let navigationController = self.presenterViewController.navigationController {
+            if let navigationController = self.presenter.navigationController {
                 navigationController.pushViewController(selectSongVC, animated: true)
             }
             else {
                 let navController = UINavigationController(rootViewController: selectSongVC)
-                self.presenterViewController.present(navController, animated: true)
+                self.presenter.present(navController, animated: true)
             }
         }
         semaphore.wait()

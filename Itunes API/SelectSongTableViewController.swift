@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 
 class SelectSongTableViewController: UITableViewController, SearchTableViewCellDelegate {
+    
     let itunes = ITunesApi()
     var songs: [ITunesSong] = []
     
@@ -30,6 +31,8 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         tableView.register(UINib(nibName: searchCellId, bundle: nil), forCellReuseIdentifier: searchCellId)
         tableView.register(UINib(nibName: songCellId, bundle: nil), forCellReuseIdentifier: songCellId)
         
+        // COMMENT: кнопку отмены нужно добавлять только если нас презентовали через present(), не push; во втором случае будет стандартная кнопка back; можно проверить через количество viewControllers в navigationController'е прямо тут
+        // COMMENT: тут лучше использовать barButtonSystemItem: .cancel
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отмена", style: .plain, target: self, action: #selector(closeAction))
         
         navigationController?.navigationBar.tintColor = .red
@@ -37,25 +40,37 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
     
     @objc func closeAction() {
         audioPlayer?.stop()
+        // COMMENT: закрывать UI нужно по другому если этот VC был презентован через present()
+        // COMMENT: в данном случае можем перенести ответственность за закрытие в операцию добавив метод в делегат типа didFinish
+        // COMMENT: также сейчас есть проблема что операция никогда не закончится если юзер сделает cancel
         navigationController?.popViewController(animated: true)
     }
     
     @objc func doneAction() {
-        audioPlayer?.stop()
         if let selectedSong = playingSong { delegate?.didSelectSong(song: selectedSong) }
+        
+        // COMMENT: вместо этого лучше вызвать closeAction
+        audioPlayer?.stop()
         navigationController?.popViewController(animated: true)
     }
     
     func selectSong(song: ITunesSong) {
+        // COMMENT: давай тут используем barButtonSystemItem: .done
+        // COMMENT: при данном UI кнопку стоит прятать когда юзер редактирует поле поиска и выбранная песня пропадает из списка
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Выбрать", style: .plain, target: self, action: #selector(doneAction))
+        
         downloadTask?.cancel()
         downloadTask = itunes.downloadSong(url: song.previewUrl, id: song.id) {[weak self] error, resultURL in
             guard error == nil else { return }
             self?.playingSong = song
+            // COMMENT: force unwrap надо убрать
             self?.playSong(url: resultURL!)
         }
+        
+        // COMMENT: этот resume лучше вынести в itunes api
         downloadTask?.resume()
         
+        // COMMENT: эту логику стоит перенести в itunes api; там можно просто вызвать completionblock если файл есть
         if downloadTask == nil {
             let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())\(song.id).m4a")
             playingSong = song
@@ -82,7 +97,8 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         if playingSong?.previewUrl == songToPlay.previewUrl {
             playingSong = nil
             cell?.setPlaying(playing: false)
-        } else {
+        }
+        else {
             selectSong(song: songToPlay)
             cell?.setPlaying(playing: true)
         }
@@ -108,6 +124,8 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         }
     }
     
+    // COMMENT: у нас тут слишком много жонглирования с + / - 1 из-за search cell, предлагаю посадить ее в отдельную секцию и избавится от неё; иначе для читабельности придется вынести в отдельные методы типа song(forIndexPath), но в данном случае первое проще
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1 + songs.count
     }
@@ -121,9 +139,9 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
                 self.updateSongRows()
             }
         }
+        // COMMENT: этот resume лучше перенести в itunes api
         dataTask?.resume()
     }
-    
     
     func updateSongRows() {
         tableView.performBatchUpdates({

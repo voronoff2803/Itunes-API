@@ -6,8 +6,8 @@
 //  Copyright © 2019 Alexey Voronov. All rights reserved.
 //
 
-import Foundation
 import UIKit
+
 extension UIView {
     @IBInspectable var cornerRadius: CGFloat {
         get { return self.layer.cornerRadius }

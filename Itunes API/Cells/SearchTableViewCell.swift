@@ -28,4 +28,3 @@ class SearchTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
 }
-
