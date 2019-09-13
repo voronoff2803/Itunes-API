@@ -12,6 +12,7 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
     
     let presenter: UIViewController
     var selectedSong: ITunesSong?
+    let selectSongVC = SelectSongTableViewController()
 
     private let semaphore = DispatchSemaphore(value: 0)
     
@@ -21,14 +22,13 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
     
     override func main() {
         DispatchQueue.main.async() {
-            let selectSongVC = SelectSongTableViewController()
-            selectSongVC.delegate = self
+            self.selectSongVC.delegate = self
             
             if let navigationController = self.presenter.navigationController {
-                navigationController.pushViewController(selectSongVC, animated: true)
+                navigationController.pushViewController(self.selectSongVC, animated: true)
             }
             else {
-                let navController = UINavigationController(rootViewController: selectSongVC)
+                let navController = UINavigationController(rootViewController: self.selectSongVC)
                 self.presenter.present(navController, animated: true)
             }
         }
@@ -37,6 +37,15 @@ class SelectItunesSongOperation: Operation, SelectSongViewControllerDelegate {
     
     func didSelectSong(song: ITunesSong) {
         selectedSong = song
+        semaphore.signal()
+    }
+    
+    func didFinish() {
+        if let navigationController = presenter.navigationController {
+            navigationController.popViewController(animated: true)
+        } else {
+            selectSongVC.dismiss(animated: true, completion: nil)
+        }
         semaphore.signal()
     }
 }

@@ -16,6 +16,7 @@ class SongTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
     }
     
     func setup(song: ITunesSong) {
@@ -32,17 +33,21 @@ class SongTableViewCell: UITableViewCell {
         DispatchQueue.global().async { [weak self] in
             guard let data = try? Data(contentsOf: url) else { return }
             DispatchQueue.main.async {
-                // COMMENT: эти guard можно соединить в один
-                guard let image = UIImage(data: data) else { return }
-                guard url == self?.currentAlbumImageURL else { return }
+                guard let image = UIImage(data: data), url == self?.currentAlbumImageURL else { return }
                 self?.songAlbumImageView.image = image
             }
         }
     }
     
-    func setPlaying(playing: Bool) {
-        setSelected(false, animated: true)
-        if playing { songNameLabel.textColor = .red }
-        else { songNameLabel.textColor = .darkText }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        if selected {
+            songNameLabel.textColor = .red
+            self.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+            UIView.animate(withDuration: 0.2) {
+                self.backgroundColor = UIColor.white
+            }
+        } else {
+            songNameLabel.textColor = .darkText
+        }
     }
 }

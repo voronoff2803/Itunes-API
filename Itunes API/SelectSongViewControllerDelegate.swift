@@ -10,4 +10,5 @@ import Foundation
 
 protocol SelectSongViewControllerDelegate: class {
     func didSelectSong(song: ITunesSong)
+    func didFinish()
 }

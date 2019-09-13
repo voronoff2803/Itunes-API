@@ -19,6 +19,7 @@ class SearchTableViewCell: UITableViewCell, UITextFieldDelegate {
 
         selectionStyle = .none
         searchField.delegate = self
+        searchField.returnKeyType = .done
         
         searchField.addTarget(self, action: #selector(searchFieldChange), for: .editingChanged)
     }
@@ -26,5 +27,10 @@ class SearchTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc func searchFieldChange() {
         delegate?.textFieldDidChange(text: searchField.text ?? "")
     }
-
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
 }
