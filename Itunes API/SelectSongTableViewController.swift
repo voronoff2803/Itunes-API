@@ -75,8 +75,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         
         downloadTask?.cancel()
         downloadTask = itunes.downloadSong(url: song.previewUrl, id: song.id) {[weak self] (resultURL, error) in
-            guard error == nil else { return }
-            guard let songURL = resultURL else { return }
+            guard error == nil, let songURL = resultURL else { return }
             self?.playingSong = song
             self?.playSong(url: songURL)
         }
@@ -131,9 +130,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         dataTask = itunes.searchMusic(name: text) { result, error in
             guard error == nil else { return }
             self.songs = result ?? []
-            DispatchQueue.main.async {
-                self.updateSongRows()
-            }
+            self.updateSongRows()
         }
         navigationItem.rightBarButtonItem = nil
         audioPlayer?.stop()
