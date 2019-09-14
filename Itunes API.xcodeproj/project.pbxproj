@@ -24,6 +24,8 @@
 		0D25A8E0232472F700488D87 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D25A8DF232472F700488D87 /* MainViewController.swift */; };
 		0D25A8E2232475D100488D87 /* SelectSongViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D25A8E1232475D100488D87 /* SelectSongViewControllerDelegate.swift */; };
 		0D7A31CF23295E9C0034F21F /* SelectItunesSongOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7A31CE23295E9C0034F21F /* SelectItunesSongOperation.swift */; };
+		647B1AAE232C291C00C1A0FC /* Optional+AssertNonNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647B1AAD232C291C00C1A0FC /* Optional+AssertNonNil.swift */; };
+		64A1A09C232C36E500C26159 /* FailableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A1A09B232C36E500C26159 /* FailableDecodable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		0D25A8DF232472F700488D87 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0D25A8E1232475D100488D87 /* SelectSongViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSongViewControllerDelegate.swift; sourceTree = "<group>"; };
 		0D7A31CE23295E9C0034F21F /* SelectItunesSongOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItunesSongOperation.swift; sourceTree = "<group>"; };
+		647B1AAD232C291C00C1A0FC /* Optional+AssertNonNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+AssertNonNil.swift"; sourceTree = "<group>"; };
+		64A1A09B232C36E500C26159 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				0D1482FD23242BB1007EE573 /* UIView+decoration.swift */,
+				647B1AAD232C291C00C1A0FC /* Optional+AssertNonNil.swift */,
+				64A1A09B232C36E500C26159 /* FailableDecodable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -207,6 +213,8 @@
 				0D25A8E2232475D100488D87 /* SelectSongViewControllerDelegate.swift in Sources */,
 				0D14830223243786007EE573 /* SearchTableViewCellDelegate.swift in Sources */,
 				0D1482F723242AA0007EE573 /* SearchTableViewCell.swift in Sources */,
+				647B1AAE232C291C00C1A0FC /* Optional+AssertNonNil.swift in Sources */,
+				64A1A09C232C36E500C26159 /* FailableDecodable.swift in Sources */,
 				0D1482FE23242BB1007EE573 /* UIView+decoration.swift in Sources */,
 				0D21ABA1232C02D7009A9484 /* ItunesSongsSearchResult.swift in Sources */,
 			);
@@ -356,7 +364,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3WBMTG67K;
+				DEVELOPMENT_TEAM = 6CFA54MQCP;
 				INFOPLIST_FILE = "Itunes API/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -376,7 +384,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3WBMTG67K;
+				DEVELOPMENT_TEAM = 6CFA54MQCP;
 				INFOPLIST_FILE = "Itunes API/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

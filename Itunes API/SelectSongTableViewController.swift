@@ -32,9 +32,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         tableView.register(UINib(nibName: songCellId, bundle: nil), forCellReuseIdentifier: songCellId)
         
         if self.navigationController?.viewControllers.count == 1 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(closeAction))
-        } else {
-            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         }
         
         navigationController?.navigationBar.tintColor = .red
@@ -42,21 +40,34 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        if self.isMovingFromParent {
-            delegate?.didFinish()
-            closeAction()
-        }
+        if isMovingFromParent { close(needsDismissing: false) }
     }
     
-    @objc func closeAction() {
+    func close(needsDismissing: Bool) {
         audioPlayer?.stop()
-        delegate?.didFinish()
+        delegate?.didFinish(self, needsDismissing: needsDismissing)
+    }
+    
+    @objc func cancelAction() {
+        close(needsDismissing: true)
     }
     
     @objc func doneAction() {
         if let selectedSong = playingSong { delegate?.didSelectSong(song: selectedSong) }
-        closeAction()
+        close(needsDismissing: true)
+    }
+    
+    func pauseCurrentOrPlayNew(withCell cell: SongTableViewCell, andSong song: ITunesSong) {
+        audioPlayer?.stop()
+        
+        if playingSong?.previewUrl == song.previewUrl {
+            playingSong = nil
+            cell.setSelected(false, animated: false)
+        }
+        else {
+            selectSong(song: song)
+            cell.setSelected(true, animated: false)
+        }
     }
     
     func selectSong(song: ITunesSong) {
@@ -64,8 +75,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         
         downloadTask?.cancel()
         downloadTask = itunes.downloadSong(url: song.previewUrl, id: song.id) {[weak self] (resultURL, error) in
-            guard error == nil else { return }
-            guard let songURL = resultURL else { return }
+            guard error == nil, let songURL = resultURL else { return }
             self?.playingSong = song
             self?.playSong(url: songURL)
         }
@@ -83,18 +93,8 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 { return }
-        let songToPlay = songs[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath) as? SongTableViewCell
-        audioPlayer?.stop()
-        if playingSong?.previewUrl == songToPlay.previewUrl {
-            playingSong = nil
-            cell?.setSelected(false, animated: false)
-        }
-        else {
-            selectSong(song: songToPlay)
-            cell?.setSelected(true, animated: false)
-        }
+        guard indexPath.section != 0, let cell = tableView.cellForRow(at: indexPath) as? SongTableViewCell else { return }
+        pauseCurrentOrPlayNew(withCell: cell, andSong: songs[indexPath.row])
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -131,9 +131,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         dataTask = itunes.searchMusic(name: text) { result, error in
             guard error == nil else { return }
             self.songs = result ?? []
-            DispatchQueue.main.async {
-                self.updateSongRows()
-            }
+            self.updateSongRows()
         }
         navigationItem.rightBarButtonItem = nil
         audioPlayer?.stop()

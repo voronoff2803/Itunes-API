@@ -9,15 +9,5 @@
 import Foundation
 
 struct ItunesSongsSearchResult: Decodable {
-    let results: [ITunesSong]
-    
-    enum CodingKeys: String, CodingKey {
-        case results
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.results = try container.decode([ITunesSong].self, forKey: .results)
-    }
+    let results: [FailableDecodable<ITunesSong>]
 }
