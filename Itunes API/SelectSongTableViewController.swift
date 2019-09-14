@@ -140,6 +140,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
     func deselectSelectedRow() {
         if let selectedRowIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectedRowIndexPath, animated: false)
+            playingSong = nil
         }
     }
     
