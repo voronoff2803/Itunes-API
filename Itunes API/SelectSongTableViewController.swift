@@ -30,6 +30,8 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
 
         tableView.register(UINib(nibName: searchCellId, bundle: nil), forCellReuseIdentifier: searchCellId)
         tableView.register(UINib(nibName: songCellId, bundle: nil), forCellReuseIdentifier: songCellId)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
         
         if self.navigationController?.viewControllers.count == 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))

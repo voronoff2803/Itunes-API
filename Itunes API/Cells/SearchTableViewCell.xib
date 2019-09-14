@@ -13,17 +13,20 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="74" id="KGk-i7-Jjw" customClass="SearchTableViewCell" customModule="Itunes_API" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="voW-a6-LoQ">
-                        <rect key="frame" x="20" y="14.5" width="335" height="36"/>
+                        <rect key="frame" x="20" y="14" width="335" height="36"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Поиск музыки" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Emc-pw-nmR">
                                 <rect key="frame" x="28" y="0.0" width="307" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="D9T-ea-Khm"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -43,7 +46,6 @@
                             <constraint firstItem="Emc-pw-nmR" firstAttribute="leading" secondItem="voW-a6-LoQ" secondAttribute="leading" constant="28" id="ErT-Oe-cDk"/>
                             <constraint firstItem="fea-Ex-ozX" firstAttribute="leading" secondItem="voW-a6-LoQ" secondAttribute="leading" constant="6" id="NOf-Ff-Cbz"/>
                             <constraint firstAttribute="bottom" secondItem="Emc-pw-nmR" secondAttribute="bottom" id="R2d-yH-cNd"/>
-                            <constraint firstAttribute="height" constant="36" id="YzV-1T-s72"/>
                             <constraint firstAttribute="trailing" secondItem="Emc-pw-nmR" secondAttribute="trailing" id="bdJ-uk-YgX"/>
                             <constraint firstItem="fea-Ex-ozX" firstAttribute="centerY" secondItem="Emc-pw-nmR" secondAttribute="centerY" id="khx-CV-XyN"/>
                         </constraints>
@@ -58,7 +60,7 @@
                     <constraint firstItem="voW-a6-LoQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="Kyf-Tb-LAW"/>
                     <constraint firstItem="voW-a6-LoQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="T3L-ek-gkh"/>
                     <constraint firstAttribute="trailing" secondItem="voW-a6-LoQ" secondAttribute="trailing" constant="20" id="XTH-7Y-6Oo"/>
-                    <constraint firstAttribute="bottom" secondItem="voW-a6-LoQ" secondAttribute="bottom" constant="14" id="mTw-Qa-Dug"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="voW-a6-LoQ" secondAttribute="bottom" constant="14" id="mTw-Qa-Dug"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
