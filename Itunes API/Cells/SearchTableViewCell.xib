@@ -22,7 +22,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="voW-a6-LoQ">
                         <rect key="frame" x="20" y="14" width="335" height="36"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Поиск музыки" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Emc-pw-nmR">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search tracks (LOCALIZE ME)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Emc-pw-nmR">
                                 <rect key="frame" x="28" y="0.0" width="307" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="D9T-ea-Khm"/>
