@@ -20,6 +20,7 @@ class SearchTableViewCell: UITableViewCell, UITextFieldDelegate {
         selectionStyle = .none
         searchField.delegate = self
         searchField.returnKeyType = .done
+        searchField.autocorrectionType = .no
         
         searchField.addTarget(self, action: #selector(searchFieldChange), for: .editingChanged)
     }

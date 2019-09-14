@@ -127,6 +127,7 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
     
     func textFieldDidChange(text: String) {
         dataTask?.cancel()
+        deselectSelectedRow()
         dataTask = itunes.searchMusic(name: text) { result, error in
             guard error == nil else { return }
             self.songs = result ?? []
@@ -136,6 +137,12 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
         }
         navigationItem.rightBarButtonItem = nil
         audioPlayer?.stop()
+    }
+    
+    func deselectSelectedRow() {
+        if let selectedRowIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedRowIndexPath, animated: false)
+        }
     }
     
     func updateSongRows() {
