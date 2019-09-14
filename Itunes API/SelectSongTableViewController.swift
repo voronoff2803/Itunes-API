@@ -154,15 +154,16 @@ class SelectSongTableViewController: UITableViewController, SearchTableViewCellD
             }
             else if tableView.numberOfRows(inSection: 1) < songs.count {
                 var indexPaths: [IndexPath] = []
-                print(self.tableView.numberOfRows(inSection: 1))
                 for i in self.tableView.numberOfRows(inSection: 1)..<songs.count {
                     indexPaths.append(IndexPath(item: i, section: 1))
                 }
                 tableView.insertRows(at: indexPaths, with: .automatic)
             }
-            else if self.tableView.numberOfRows(inSection: 1) > 0 {
+        }, completion: nil)
+        tableView.performBatchUpdates({
+            if self.tableView.numberOfRows(inSection: 1) > 0 {
                 var indexPaths: [IndexPath] = []
-                for i in 0..<self.tableView.numberOfRows(inSection: 1) {
+                for i in 0..<songs.count {
                     indexPaths.append(IndexPath(item: i, section: 1))
                 }
                 tableView.reloadRows(at: indexPaths, with: .automatic)
